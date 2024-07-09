@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    volumes:
+      - ./src/:/api/src
+    ports:
+      - 3000:3000
+    command: "npm run start"
+    environment:
+      - DB_HOST=mongodb
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: app_db
+    ports:
+      - "27017:27017"
